@@ -7,6 +7,7 @@ import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { INTERESTS, label } from "@/lib/interests";
 import { saveProfile } from "./actions";
+import AvatarUpload from "@/components/AvatarUpload";
 import { logout } from "../auth/actions";
 
 // Profil: name, optional interests (from the "1 Interessen" design), sign out
@@ -17,7 +18,7 @@ export default async function ProfilePage({ searchParams }: PageProps<"/profile"
   const supabase = await createClient();
   const { data: profile } = await supabase
     .from("profiles")
-    .select("display_name,interests,is_admin")
+    .select("display_name,interests,is_admin,avatar_url,bio")
     .eq("id", user.id)
     .single();
   const chosen = new Set<string>(profile?.interests ?? []);
@@ -34,9 +35,31 @@ export default async function ProfilePage({ searchParams }: PageProps<"/profile"
         </p>
       )}
 
+      <AvatarUpload
+        userId={user.id}
+        name={profile?.display_name ?? ""}
+        url={profile?.avatar_url ?? null}
+        labels={{
+          add: t.profile.photoAdd,
+          change: t.profile.photoChange,
+          remove: t.profile.photoRemove,
+          uploading: t.profile.photoUploading,
+          error: t.profile.photoError,
+        }}
+      />
+
       <form action={saveProfile} className={styles.form}>
         <Field id="name" label={t.profile.name} defaultValue={profile?.display_name ?? ""} autoComplete="given-name" required />
         <p className={`caption ${styles.muted}`}>{user.email}</p>
+        <Field
+          id="bio"
+          label={t.profile.bio}
+          hint={t.profile.bioHint}
+          placeholder={t.profile.bioPlaceholder}
+          multiline
+          maxLength={160}
+          defaultValue={profile?.bio ?? undefined}
+        />
 
         <section className={styles.section} aria-labelledby="interests">
           <div>

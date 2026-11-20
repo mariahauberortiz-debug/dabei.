@@ -10,6 +10,7 @@ export type Invite = {
   event: { title: string; description: string | null; location: string | null; url: string | null; image_url: string | null };
   initiator: string;
   going: string[];
+  going_people?: { name: string; avatar_url: string | null }[];
   going_count: number;
 };
 

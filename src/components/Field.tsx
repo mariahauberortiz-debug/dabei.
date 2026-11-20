@@ -24,6 +24,7 @@ export default function Field({ id, label, hint, multiline, ...input }: Props) {
           placeholder={input.placeholder}
           defaultValue={input.defaultValue as string | undefined}
           required={input.required}
+          maxLength={input.maxLength}
         />
       ) : (
         <input id={id} name={id} className={styles.input} aria-describedby={hint ? `${id}-hint` : undefined} {...input} />

@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "../../plan.module.css";
 import TopBar from "@/components/TopBar";
 import Photo from "@/components/Photo";
+import Avatar from "@/components/Avatar";
 import ShareButtons from "@/components/ShareButtons";
 import { getDictionary } from "@/i18n/lang";
 import { requireUser } from "@/lib/auth";
@@ -24,7 +25,7 @@ type ParticipantRow = {
   user_id: string;
   status: "going" | "declined";
   joined_at: string;
-  profile: { display_name: string } | null;
+  profile: { display_name: string; avatar_url: string | null; bio: string | null } | null;
 };
 
 // W / B8 / C3 · the plan: who's in, share the link
@@ -43,7 +44,7 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
       .maybeSingle(),
     supabase
       .from("plan_participants")
-      .select("user_id,status,joined_at,profile:profiles!plan_participants_user_id_fkey(display_name)")
+      .select("user_id,status,joined_at,profile:profiles!plan_participants_user_id_fkey(display_name,avatar_url,bio)")
       .eq("plan_id", id)
       .order("joined_at"),
   ]);
@@ -113,12 +114,11 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
             const name = p.profile?.display_name ?? "?";
             return (
               <li key={p.user_id} className={styles.person}>
-                <span className={styles.initial} aria-hidden="true">
-                  {name.charAt(0).toUpperCase()}
-                </span>
+                <Avatar name={name} url={p.profile?.avatar_url ?? null} />
                 <span className={styles.personName}>
                   {name}
                   {p.user_id === user.id && ` (${t.plan.you})`}
+                  {p.profile?.bio && <span className={`caption ${styles.bio}`}>{p.profile.bio}</span>}
                 </span>
                 {isInitiator && p.user_id !== user.id && (
                   <form action={removeParticipant}>

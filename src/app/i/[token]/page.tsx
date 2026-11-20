@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import styles from "../../plan.module.css";
 import TopBar from "@/components/TopBar";
 import Photo from "@/components/Photo";
+import Avatar from "@/components/Avatar";
 import { getDictionary } from "@/i18n/lang";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import { formatDateTime } from "@/lib/dates";
@@ -68,12 +69,10 @@ export default async function InvitePage({ params, searchParams }: PageProps<"/i
           {placesLeft !== null && ` · ${t.plan.placesLeft(placesLeft)}`}
         </h2>
         <ul className={styles.people}>
-          {invite.going.map((name, i) => (
-            <li key={`${name}-${i}`} className={styles.person}>
-              <span className={styles.initial} aria-hidden="true">
-                {name.charAt(0).toUpperCase()}
-              </span>
-              <span className={styles.personName}>{name}</span>
+          {(invite.going_people ?? invite.going.map((name) => ({ name, avatar_url: null }))).map((person, i) => (
+            <li key={`${person.name}-${i}`} className={styles.person}>
+              <Avatar name={person.name} url={person.avatar_url} />
+              <span className={styles.personName}>{person.name}</span>
             </li>
           ))}
         </ul>

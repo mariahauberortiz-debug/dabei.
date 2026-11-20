@@ -10,6 +10,7 @@ export async function saveProfile(formData: FormData) {
   if (!user) redirect("/login?next=/profile");
 
   const name = String(formData.get("name") ?? "").trim();
+  const bio = String(formData.get("bio") ?? "").trim().slice(0, 160) || null;
   const interests = formData
     .getAll("interests")
     .map(String)
@@ -18,7 +19,7 @@ export async function saveProfile(formData: FormData) {
   const supabase = await createClient();
   await supabase
     .from("profiles")
-    .update({ ...(name ? { display_name: name } : {}), interests })
+    .update({ ...(name ? { display_name: name } : {}), bio, interests })
     .eq("id", user.id);
 
   revalidatePath("/", "layout");
