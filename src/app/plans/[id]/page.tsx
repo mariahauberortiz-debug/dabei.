@@ -90,7 +90,7 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
           <p className={`body ${styles.heroBox}`}>{t.invite.youreInBody}</p>
         </section>
       ) : (
-        <p className={`label ${styles.muted}`}>{isInitiator ? t.plan.yourPlans : t.plan.by(initiatorName)}</p>
+        <p className={`label ${styles.muted}`}>{isInitiator ? t.plan.yourPlan : t.plan.by(initiatorName)}</p>
       )}
 
       <Link href={`/events/${plan.event.id}`} className={styles.summary}>
@@ -169,7 +169,7 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
         </section>
       )}
 
-      {iAmGoing && (placesLeft === null || placesLeft > 0) && (
+      {iAmGoing && !isPast(plan.starts_at) && (placesLeft === null || placesLeft > 0) && (
         <section className={styles.section} aria-labelledby="share">
           <h2 id="share" className="title">
             {t.plan.shareTitle}

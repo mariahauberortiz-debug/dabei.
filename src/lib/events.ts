@@ -35,7 +35,12 @@ export function groupForHome(events: EventRow[]) {
   const own = upcoming.filter((e) => e.source === "user");
   const curated = upcoming.filter((e) => e.source === "curated");
 
-  const endingSoon = own.filter((e) => e.ends_at && new Date(e.ends_at).getTime() <= in14d).sort(byDate("ends_at"));
+  // "Runs until" = has an end but no start, or ends more than 14 h after it starts (exhibitions, not evening events)
+  const runsUntil = (e: EventRow) =>
+    !!e.ends_at && (!e.starts_at || new Date(e.ends_at).getTime() - new Date(e.starts_at).getTime() > 14 * 3_600_000);
+  const endingSoon = own
+    .filter((e) => runsUntil(e) && new Date(e.ends_at!).getTime() <= in14d)
+    .sort(byDate("ends_at"));
   const rest = own.filter((e) => !endingSoon.includes(e));
   const soon = rest.filter((e) => e.starts_at).sort(byDate("starts_at"));
   const someday = rest.filter((e) => !e.starts_at);

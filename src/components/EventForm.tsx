@@ -28,12 +28,12 @@ export default function EventForm({
       {event && <input type="hidden" name="id" value={event.id} />}
       <Field id="url" label={t.newEvent.link} hint={t.newEvent.linkHint} type="text" inputMode="url" autoComplete="off" defaultValue={event?.url ?? undefined} />
       <Field id="title" label={t.newEvent.name} placeholder={t.newEvent.namePlaceholder} defaultValue={event?.title} required />
-      <Field id="date" label={t.newEvent.date} type="date" defaultValue={start?.date} />
+      <Field id="date" label={t.newEvent.date} type="date" min="2024-01-01" max="2100-12-31" defaultValue={start?.date} />
       <div className={fieldStyles.row}>
         <Field id="start_time" label={t.newEvent.startTime} type="time" defaultValue={start?.time} />
         <Field id="end_time" label={t.newEvent.endTime} type="time" defaultValue={endIsTime ? end?.time : undefined} />
       </div>
-      <Field id="ends_on" label={t.newEvent.endsAt} hint={t.newEvent.endsAtHint} type="date" defaultValue={!endIsTime ? end?.date : undefined} />
+      <Field id="ends_on" label={t.newEvent.endsAt} hint={t.newEvent.endsAtHint} type="date" min="2024-01-01" max="2100-12-31" defaultValue={!endIsTime ? end?.date : undefined} />
       <Field id="location" label={t.newEvent.location} hint={t.newEvent.locationHint} defaultValue={event?.location ?? undefined} />
       <Field id="description" label={t.newEvent.description} multiline defaultValue={event?.description ?? undefined} />
       <button type="submit" className="btn btn-primary btn-block">

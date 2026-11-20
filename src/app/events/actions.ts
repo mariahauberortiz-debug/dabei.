@@ -36,7 +36,16 @@ function readTimes(formData: FormData) {
       ends_at = new Date(new Date(ends_at).getTime() + 86_400_000).toISOString();
     }
   }
-  return { starts_at, ends_at };
+  // Ignore impossible dates (e.g. a mistyped year like 1901, or an end before the start)
+  const plausible = (iso: string | null) => {
+    if (!iso) return null;
+    const y = new Date(iso).getUTCFullYear();
+    return y >= 2024 && y <= 2100 ? iso : null;
+  };
+  const s = plausible(starts_at);
+  let e = plausible(ends_at);
+  if (s && e && e < s) e = null;
+  return { starts_at: s, ends_at: e };
 }
 
 function readEvent(formData: FormData) {
