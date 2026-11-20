@@ -181,14 +181,11 @@
   border-radius: var(--radius-none) var(--radius-none) var(--radius-photo) var(--radius-photo);
 }
 
+/* Buttons side by side only when both fit on one line; otherwise stacked full width */
 .row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--space-2);
-}
-
-.row > * {
-  flex: 1 1 140px;
 }
 
 /* "Wie war's?" – one row per person with two pill choices */
@@ -235,6 +232,7 @@
 
 .option span {
   display: flex;
+  white-space: nowrap;
   align-items: center;
   justify-content: center;
   min-height: 44px;

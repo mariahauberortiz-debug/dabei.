@@ -93,6 +93,8 @@ a { color: var(--ink); }
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  white-space: nowrap; /* a button label never wraps onto two lines */
+  text-align: center;
 }
 .btn-primary { border: 0; background: var(--burgundy); color: var(--on-burgundy); }
 .btn-secondary { border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font-weight: 500; }
