@@ -4,6 +4,7 @@ import TopBar from "@/components/TopBar";
 import Field from "@/components/Field";
 import { login } from "../auth/actions";
 import { getDictionary } from "@/i18n/lang";
+import { isUuid } from "@/lib/plans";
 
 type ErrorKey = "invalid" | "exists" | "weak" | "missing" | "unknown";
 
@@ -13,6 +14,8 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const next = typeof params.next === "string" ? params.next : "/";
   const error = typeof params.error === "string" ? (params.error as ErrorKey) : null;
   const checkEmail = params.checkEmail === "1";
+  const invite = typeof params.invite === "string" ? params.invite : "";
+  const from = isUuid(params.from) ? params.from : "";
 
   return (
     <main className={`column ${styles.page}`}>
@@ -31,6 +34,8 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
 
       <form action={login} className={styles.form}>
         <input type="hidden" name="next" value={next} />
+        {invite && <input type="hidden" name="invite" value={invite} />}
+        {from && <input type="hidden" name="from" value={from} />}
         <Field id="email" label={t.auth.email} type="email" autoComplete="email" required />
         <Field id="password" label={t.auth.password} type="password" autoComplete="current-password" required />
         <button type="submit" className="btn btn-primary btn-block">
@@ -38,9 +43,14 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
         </button>
       </form>
 
-      <Link href={{ pathname: "/signup", query: { next } }} className={`body ${styles.switch}`}>
-        {t.auth.toSignup}
-      </Link>
+      {invite && (
+        <Link
+          href={{ pathname: "/signup", query: { next, invite, ...(from ? { from } : {}) } }}
+          className={`body ${styles.switch}`}
+        >
+          {t.auth.toSignup}
+        </Link>
+      )}
     </main>
   );
 }

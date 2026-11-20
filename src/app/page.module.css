@@ -88,3 +88,29 @@
   align-items: center;
   justify-content: center;
 }
+
+/* "Dein Plan" card: burgundy, the strongest element on the homepage */
+.planCard {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 22px var(--space-6);
+  background: var(--burgundy);
+  color: var(--surface);
+  text-decoration: none;
+  border-radius: var(--radius-card) var(--radius-card) var(--radius-card) var(--radius-notch);
+}
+
+.planText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.planDots {
+  font-family: var(--font-display);
+  font-size: 44px;
+  line-height: 40px;
+}

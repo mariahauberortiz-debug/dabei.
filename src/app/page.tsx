@@ -6,6 +6,7 @@ import { getDictionary } from "@/i18n/lang";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import { EVENT_COLUMNS, groupForHome, type EventRow } from "@/lib/events";
 import { logout } from "./auth/actions";
+import { formatDateTime, hoursAgoISO } from "@/lib/dates";
 
 export default async function Home() {
   const { lang, t } = await getDictionary();
@@ -24,12 +25,10 @@ export default async function Home() {
           <p className="body">{t.home.placeBody}</p>
         </section>
         <div className={styles.actions}>
-          <Link href="/signup" className="btn btn-primary btn-block">
-            {t.home.signup}
-          </Link>
-          <Link href="/login" className="btn btn-secondary btn-block">
+          <Link href="/login" className="btn btn-primary btn-block">
             {t.home.login}
           </Link>
+          <p className={`caption ${styles.muted}`}>{t.inviteOnly.body}</p>
         </div>
       </main>
     );
@@ -37,10 +36,24 @@ export default async function Home() {
 
   // Screen 4 · Homepage
   const supabase = await createClient();
-  const [{ data: profile }, { data: events }] = await Promise.all([
+  const since = hoursAgoISO(12); // keep today's plans visible
+  const [{ data: profile }, { data: events }, { data: planData }] = await Promise.all([
     supabase.from("profiles").select("display_name").eq("id", user.id).single(),
     supabase.from("events").select(EVENT_COLUMNS).or(`source.eq.curated,created_by.eq.${user.id}`),
+    supabase
+      .from("plans")
+      .select("id,starts_at,event:events(title,location),plan_participants!inner(user_id,status)")
+      .eq("plan_participants.user_id", user.id)
+      .eq("plan_participants.status", "going")
+      .eq("status", "open")
+      .gte("starts_at", since)
+      .order("starts_at"),
   ]);
+  const plans = (planData ?? []) as unknown as {
+    id: string;
+    starts_at: string;
+    event: { title: string; location: string | null } | null;
+  }[];
   const groups = groupForHome((events ?? []) as EventRow[]);
   const hasOwn = groups.endingSoon.length + groups.soon.length + groups.someday.length > 0;
 
@@ -61,6 +74,27 @@ export default async function Home() {
         </h1>
         <p className={`body ${styles.muted}`}>{t.home.tagline}</p>
       </header>
+
+      {plans.length > 0 && (
+        <section className={styles.section} aria-labelledby="h-plans">
+          <h2 id="h-plans" className={styles.sectionTitle}>
+            {t.plan.yourPlans}
+          </h2>
+          {plans.map((p) => (
+            <Link key={p.id} href={`/plans/${p.id}`} className={styles.planCard}>
+              <span className={styles.planText}>
+                <span className="title">{p.event?.title}</span>
+                <span className="body">
+                  {[formatDateTime(p.starts_at, lang), p.event?.location].filter(Boolean).join(" · ")}
+                </span>
+              </span>
+              <span aria-hidden="true" className={styles.planDots}>
+                ..
+              </span>
+            </Link>
+          ))}
+        </section>
+      )}
 
       {!hasOwn && (
         <div className={styles.card}>

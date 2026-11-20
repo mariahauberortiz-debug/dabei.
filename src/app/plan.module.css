@@ -1,0 +1,182 @@
+/* Shared styles for plan creation, plan view and invitation pages */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-12);
+}
+
+.back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.muted {
+  color: var(--ink-muted);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.error {
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--burgundy);
+  color: var(--burgundy);
+  border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
+}
+
+/* Event summary row (thumbnail + serif title + meta) */
+.summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  overflow: hidden;
+  border-radius: 16px 16px 16px 6px;
+}
+
+.summaryText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Strong moment: olive block ("Plan steht", "Du bist dabei") */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-6);
+  background: var(--olive);
+  color: var(--ink);
+  border-radius: var(--radius-card) var(--radius-card) var(--radius-card) var(--radius-notch);
+}
+
+.heroBox {
+  align-self: flex-start;
+  padding: var(--space-3) var(--space-4);
+  background: var(--cream);
+  border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
+}
+
+.notice {
+  padding: var(--space-4) var(--space-6);
+  background: var(--cream);
+  border-radius: var(--radius-card) var(--radius-card) var(--radius-card) var(--radius-notch);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionTitle {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+.people {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 56px;
+  padding: 0 var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
+}
+
+.personDeclined {
+  color: var(--ink-muted);
+  background: transparent;
+}
+
+/* Organic initial bubble */
+.initial {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 17px;
+}
+
+.personName {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+}
+
+.textButton {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--ink-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Big photo in the invitation: only the bottom corners rounded */
+.photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-none) var(--radius-none) var(--radius-photo) var(--radius-photo);
+}

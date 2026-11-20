@@ -68,3 +68,8 @@ export function daysUntil(iso: string) {
   const ms = new Date(iso).getTime() - Date.now();
   return Math.max(0, Math.ceil(ms / 86_400_000));
 }
+
+/** ISO timestamp for "n hours ago" (used to keep today's plans visible). */
+export function hoursAgoISO(n: number) {
+  return new Date(Date.now() - n * 3_600_000).toISOString();
+}
