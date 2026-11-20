@@ -146,6 +146,23 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
         {isInitiator && going.length <= 1 && <p className={`body ${styles.muted}`}>{t.plan.nobodyYet}</p>}
       </section>
 
+      {iAmGoing && (
+        <section className={styles.section} aria-labelledby="cal">
+          <h2 id="cal" className="title">
+            {t.calendar.title}
+          </h2>
+          <p className={`body ${styles.muted}`}>{t.calendar.hint}</p>
+          <div className={styles.row}>
+            <a href={`/plans/${plan.id}/calendar?type=ics`} className="btn btn-secondary">
+              {t.calendar.apple}
+            </a>
+            <a href={`/plans/${plan.id}/calendar?type=google`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+              {t.calendar.google}
+            </a>
+          </div>
+        </section>
+      )}
+
       {iAmGoing && (placesLeft === null || placesLeft > 0) && (
         <section className={styles.section} aria-labelledby="share">
           <h2 id="share" className="title">

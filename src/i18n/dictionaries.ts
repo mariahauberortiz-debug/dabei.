@@ -106,6 +106,15 @@ const de = {
     declinedBody: "Danke, dass du Bescheid sagst. Vielleicht beim nächsten Mal.",
     changedMind: "Doch dabei",
   },
+  calendar: {
+    title: "In deinen Kalender",
+    hint: "Mit Erinnerung am Vorabend.",
+    apple: "Apple / Outlook",
+    google: "Google Kalender",
+    eventDescription: (link: string) => `Euer Plan in dabei.: ${link}`,
+    reviewTitle: "dabei. · Wie war's?",
+    reviewDescription: (title: string, link: string) => `Wart ihr bei „${title}“? Sag kurz Bescheid: ${link}`,
+  },
   inviteOnly: {
     title: "dabei. ist gerade nur mit Einladung",
     body: "Um ein Konto zu erstellen, brauchst du einen Einladungslink von jemandem, der schon dabei ist.",
@@ -237,6 +246,15 @@ const en: Dictionary = {
     declinedTitle: "Too bad!",
     declinedBody: "Thanks for letting us know. Maybe next time.",
     changedMind: "Actually, I'm in",
+  },
+  calendar: {
+    title: "Add to your calendar",
+    hint: "With a reminder the evening before.",
+    apple: "Apple / Outlook",
+    google: "Google Calendar",
+    eventDescription: (link: string) => `Your plan in dabei.: ${link}`,
+    reviewTitle: "dabei. · How was it?",
+    reviewDescription: (title: string, link: string) => `Did you make it to “${title}”? Let us know: ${link}`,
   },
   inviteOnly: {
     title: "dabei. is invite-only right now",
