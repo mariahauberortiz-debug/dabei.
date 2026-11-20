@@ -14,9 +14,9 @@ const de = {
   home: {
     title: "Gespeichert ist nicht erlebt.",
     intro: "Aus dem, was du dir vorgenommen hast, wird ein Plan – mit jemandem, der dabei ist.",
-    placeTitle: "Dein Ort, um dabei zu sein.",
+    placeTitle: "Dein Ort, dabei zu sein.",
     placeBody:
-      "Allein oder mit Freund:innen: Hier wird aus „wollte ich mal“ ein „ich bin dabei“. Und hier findest du Menschen, die zu echten Freund:innen werden.",
+      "Hier wird aus „wollte ich mal“ ein „ich bin dabei“. Hier planst du mit deinen Freunden. Und hier findest du Menschen, die zu echten Freunden werden.",
     signup: "Konto erstellen",
     login: "Ich habe schon ein Konto",
     hello: "Hallo",
@@ -103,7 +103,7 @@ const en: Dictionary = {
     intro: "What you've been meaning to do becomes a plan – with someone who's in.",
     placeTitle: "Your place to be there.",
     placeBody:
-      "On your own or with friends: this is where “I've been meaning to” becomes “I'm in”. And where you meet people who become real friends.",
+      "This is where “I've been meaning to” becomes “I'm in”. Where you make plans with your friends. And where you meet people who become real friends.",
     signup: "Create account",
     login: "I already have an account",
     hello: "Hi",
