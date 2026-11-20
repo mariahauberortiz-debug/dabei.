@@ -5,10 +5,13 @@ import EventForm from "@/components/EventForm";
 import { createEvent } from "../actions";
 import { getDictionary } from "@/i18n/lang";
 import { requireUser } from "@/lib/auth";
+import { createClient } from "@/lib/supabase/server";
 
 // Screen 3 · Eigene Events
 export default async function NewEventPage({ searchParams }: PageProps<"/events/new">) {
-  await requireUser("/events/new");
+  const user = await requireUser("/events/new");
+  const supabase = await createClient();
+  const { data: me } = await supabase.from("profiles").select("is_admin").eq("id", user.id).single();
   const { lang, t } = await getDictionary();
   const { error } = await searchParams;
 
@@ -27,7 +30,7 @@ export default async function NewEventPage({ searchParams }: PageProps<"/events/
         </p>
       )}
 
-      <EventForm t={t} action={createEvent} submitLabel={t.newEvent.save} className={styles.form} />
+      <EventForm t={t} action={createEvent} submitLabel={t.newEvent.save} className={styles.form} userId={user.id} isAdmin={!!me?.is_admin} />
 
       <Link href="/" className={`body ${styles.switch}`}>
         {t.newEvent.cancel}

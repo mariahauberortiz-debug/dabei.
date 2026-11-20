@@ -1,4 +1,5 @@
 import Field from "./Field";
+import ImagePicker from "./ImagePicker";
 import fieldStyles from "./Field.module.css";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { EventRow } from "@/lib/events";
@@ -11,12 +12,16 @@ export default function EventForm({
   event,
   submitLabel,
   className,
+  userId,
+  isAdmin = false,
 }: {
   t: Dictionary;
   action: (formData: FormData) => Promise<void>;
   event?: EventRow;
   submitLabel: string;
   className?: string;
+  userId: string;
+  isAdmin?: boolean;
 }) {
   const start = event?.starts_at ? toBerlinParts(event.starts_at) : null;
   const end = event?.ends_at ? toBerlinParts(event.ends_at) : null;
@@ -36,6 +41,30 @@ export default function EventForm({
       <Field id="ends_on" label={t.newEvent.endsAt} hint={t.newEvent.endsAtHint} type="date" min="2024-01-01" max="2100-12-31" defaultValue={!endIsTime ? end?.date : undefined} />
       <Field id="location" label={t.newEvent.location} hint={t.newEvent.locationHint} defaultValue={event?.location ?? undefined} />
       <Field id="description" label={t.newEvent.description} multiline defaultValue={event?.description ?? undefined} />
+      <ImagePicker
+        userId={userId}
+        initialUrl={event?.image_url ?? null}
+        labels={{
+          title: t.newEvent.image,
+          add: t.newEvent.imageAdd,
+          change: t.newEvent.imageChange,
+          remove: t.newEvent.imageRemove,
+          uploading: t.newEvent.imageUploading,
+          error: t.newEvent.imageError,
+        }}
+      />
+      {isAdmin && (
+        <label className="body" style={{ display: "flex", alignItems: "center", gap: 12, minHeight: 44, cursor: "pointer" }}>
+          <input
+            type="checkbox"
+            name="curated"
+            value="1"
+            defaultChecked={event?.source === "curated"}
+            style={{ width: 22, height: 22, accentColor: "var(--ink)" }}
+          />
+          {t.newEvent.curated}
+        </label>
+      )}
       <button type="submit" className="btn btn-primary btn-block">
         {submitLabel}
       </button>

@@ -49,7 +49,15 @@ export default async function EditEventPage({ params, searchParams }: PageProps<
         </p>
       )}
 
-      <EventForm t={t} action={updateEvent} event={event} submitLabel={t.newEvent.saveChanges} className={styles.form} />
+      <EventForm
+        t={t}
+        action={updateEvent}
+        event={event}
+        submitLabel={t.newEvent.saveChanges}
+        className={styles.form}
+        userId={user.id}
+        isAdmin={!!me?.is_admin}
+      />
 
       <Link href={`/events/${event.id}`} className={`body ${styles.switch}`}>
         {t.newEvent.cancel}

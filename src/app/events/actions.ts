@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import { berlinEndOfDayISO, berlinLocalToISO } from "@/lib/dates";
 import { isUuid } from "@/lib/plans";
+import { SUPABASE_URL } from "@/lib/supabase/config";
 
 const text = (v: FormDataEntryValue | null) => (typeof v === "string" && v.trim() ? v.trim() : null);
 
@@ -48,8 +49,16 @@ function readTimes(formData: FormData) {
   return { starts_at: s, ends_at: e };
 }
 
+/** Only images from our own storage are accepted. */
+function readImage(formData: FormData) {
+  const v = text(formData.get("image_url"));
+  return v && v.startsWith(`${SUPABASE_URL}/storage/v1/object/public/event-images/`) ? v : null;
+}
+
 function readEvent(formData: FormData) {
   return {
+    image_url: readImage(formData),
+    source: formData.get("curated") === "1" ? ("curated" as const) : ("user" as const),
     title: text(formData.get("title")),
     url: cleanUrl(text(formData.get("url"))),
     location: text(formData.get("location")),
@@ -69,7 +78,7 @@ export async function createEvent(formData: FormData) {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("events")
-    .insert({ ...fields, source: "user", created_by: user.id })
+    .insert({ ...fields, created_by: user.id })
     .select("id")
     .single();
 
