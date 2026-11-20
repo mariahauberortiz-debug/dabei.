@@ -16,14 +16,14 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/plans/[id]/c
   const supabase = await createClient();
   const { data } = await supabase
     .from("plans")
-    .select("id,starts_at,initiator_id,event:events(title,location)")
+    .select("id,starts_at,initiator_id,event:events(title,location,starts_at,ends_at)")
     .eq("id", id)
     .maybeSingle();
   const plan = data as unknown as {
     id: string;
     starts_at: string;
     initiator_id: string;
-    event: { title: string; location: string | null } | null;
+    event: { title: string; location: string | null; starts_at: string | null; ends_at: string | null } | null;
   } | null;
   if (!plan?.event) return NextResponse.redirect(new URL(`/plans/${id}`, request.url));
 
@@ -40,7 +40,11 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/plans/[id]/c
   const planUrl = `${base}/plans/${id}`;
   const reviewUrl = `${base}/plans/${id}/review`;
   const start = new Date(plan.starts_at);
-  const end = new Date(start.getTime() + DEFAULT_DURATION_MIN * 60_000);
+  // Use the event's own duration if it has a start and end time on the same evening (≤ 14 h), else 2 h.
+  const ev = plan.event;
+  const evDuration = ev.starts_at && ev.ends_at ? new Date(ev.ends_at).getTime() - new Date(ev.starts_at).getTime() : 0;
+  const durationMs = evDuration > 0 && evDuration <= 14 * 3_600_000 ? evDuration : DEFAULT_DURATION_MIN * 60_000;
+  const end = new Date(start.getTime() + durationMs);
   const title = `${plan.event.title} · dabei.`;
   const description = t.calendar.eventDescription(planUrl);
 

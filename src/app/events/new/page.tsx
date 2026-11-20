@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "../../auth.module.css";
 import TopBar from "@/components/TopBar";
-import Field from "@/components/Field";
+import EventForm from "@/components/EventForm";
 import { createEvent } from "../actions";
 import { getDictionary } from "@/i18n/lang";
 import { requireUser } from "@/lib/auth";
@@ -27,17 +27,7 @@ export default async function NewEventPage({ searchParams }: PageProps<"/events/
         </p>
       )}
 
-      <form action={createEvent} className={styles.form}>
-        <Field id="url" label={t.newEvent.link} hint={t.newEvent.linkHint} type="text" inputMode="url" autoComplete="off" />
-        <Field id="title" label={t.newEvent.name} placeholder={t.newEvent.namePlaceholder} required />
-        <Field id="starts_at" label={t.newEvent.startsAt} type="datetime-local" />
-        <Field id="ends_at" label={t.newEvent.endsAt} hint={t.newEvent.endsAtHint} type="date" />
-        <Field id="location" label={t.newEvent.location} />
-        <Field id="description" label={t.newEvent.description} />
-        <button type="submit" className="btn btn-primary btn-block">
-          {t.newEvent.save}
-        </button>
-      </form>
+      <EventForm t={t} action={createEvent} submitLabel={t.newEvent.save} className={styles.form} />
 
       <Link href="/" className={`body ${styles.switch}`}>
         {t.newEvent.cancel}

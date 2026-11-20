@@ -3,7 +3,7 @@ import styles from "./EventCard.module.css";
 import Photo from "./Photo";
 import type { EventRow } from "@/lib/events";
 import type { Dictionary, Lang } from "@/i18n/dictionaries";
-import { daysUntil, formatDate, formatDateTime } from "@/lib/dates";
+import { daysUntil, formatDate, formatRange } from "@/lib/dates";
 
 // List card from screen 4 (thumbnail + badge + serif title + meta line).
 export default function EventCard({
@@ -19,7 +19,7 @@ export default function EventCard({
 }) {
   const curated = event.source === "curated";
   const when = event.starts_at
-    ? formatDateTime(event.starts_at, lang)
+    ? formatRange(event.starts_at, event.ends_at, lang)
     : event.ends_at
       ? `${t.event.until} ${formatDate(event.ends_at, lang)}`
       : null;

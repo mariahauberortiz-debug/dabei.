@@ -77,3 +77,33 @@ export function hoursAgoISO(n: number) {
 export function isPast(iso: string) {
   return new Date(iso).getTime() <= Date.now();
 }
+
+/** ISO → { date: "2026-11-28", time: "19:30" } in Berlin time (for form defaults). */
+export function toBerlinParts(iso: string) {
+  const s = new Intl.DateTimeFormat("sv-SE", {
+    timeZone: TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(iso));
+  const [date, time] = s.split(" ");
+  return { date, time };
+}
+
+/** "20:00" */
+export function formatTime(iso: string, lang: Lang) {
+  return new Intl.DateTimeFormat(lang === "de" ? "de-DE" : "en-GB", { timeZone: TZ, hour: "2-digit", minute: "2-digit" }).format(
+    new Date(iso),
+  );
+}
+
+/** Start, plus end time when it ends the same day: "Fr 22.11., 20:00–23:00" */
+export function formatRange(startIso: string, endIso: string | null, lang: Lang) {
+  const start = formatDateTime(startIso, lang);
+  if (!endIso) return start;
+  const sameDay = toBerlinParts(startIso).date === toBerlinParts(endIso).date;
+  const shortGap = new Date(endIso).getTime() - new Date(startIso).getTime() <= 14 * 3_600_000;
+  return sameDay || shortGap ? `${start}–${formatTime(endIso, lang)}` : start;
+}

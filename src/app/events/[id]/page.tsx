@@ -6,7 +6,8 @@ import { getDictionary } from "@/i18n/lang";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { EVENT_COLUMNS, type EventRow } from "@/lib/events";
-import { formatDate, formatDateTime } from "@/lib/dates";
+import { formatDate, formatRange, toBerlinParts } from "@/lib/dates";
+import { headers } from "next/headers";
 import { deleteEvent } from "../actions";
 
 // Screen 5 · Event-Detail (own or curated)
@@ -32,10 +33,36 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[id
   }
 
   const curated = event.source === "curated";
+  const { data: me } = await supabase.from("profiles").select("is_admin").eq("id", user.id).single();
+  const canEdit = event.created_by === user.id || !!me?.is_admin;
+
+  // "runs until" = ends on another day than it starts (or has no start)
+  const runsUntil =
+    event.ends_at && (!event.starts_at || toBerlinParts(event.starts_at).date !== toBerlinParts(event.ends_at).date)
+      ? event.ends_at
+      : null;
+  const ua = (await headers()).get("user-agent") ?? "";
+  const mapsUrl = (q: string) =>
+    /iPhone|iPad|Macintosh/.test(ua)
+      ? `https://maps.apple.com/?q=${encodeURIComponent(q)}`
+      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
   const facts: { k: string; v: React.ReactNode }[] = [];
-  if (event.starts_at) facts.push({ k: t.event.when, v: formatDateTime(event.starts_at, lang) });
-  if (event.ends_at) facts.push({ k: t.event.whenUntil, v: formatDate(event.ends_at, lang) });
-  if (event.location) facts.push({ k: t.event.where, v: event.location });
+  if (event.starts_at) facts.push({ k: t.event.when, v: formatRange(event.starts_at, runsUntil ? null : event.ends_at, lang) });
+  if (runsUntil) facts.push({ k: t.event.whenUntil, v: formatDate(runsUntil, lang) });
+  if (event.location)
+    facts.push({
+      k: t.event.where,
+      v: (
+        <>
+          {event.location}
+          <br />
+          <a href={mapsUrl(event.location)} target="_blank" rel="noopener noreferrer">
+            {t.event.openMap}
+          </a>
+        </>
+      ),
+    });
   if (event.url)
     facts.push({
       k: t.event.link,
@@ -64,7 +91,7 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[id
           {curated ? t.event.badgeCurated : t.event.badgeOwn}
         </span>
         <h1 className="display-l">{event.title}</h1>
-        {event.description && <p className="body">{event.description}</p>}
+        {event.description && <p className="body" style={{ whiteSpace: "pre-line" }}>{event.description}</p>}
       </div>
 
       {facts.length > 0 && (
@@ -82,13 +109,18 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[id
         <Link href={`/events/${event.id}/plan`} className="btn btn-primary btn-block">
           {t.event.goWithSomeone}
         </Link>
-        {event.created_by === user.id && (
-          <form action={deleteEvent}>
-            <input type="hidden" name="id" value={event.id} />
-            <button type="submit" className={styles.textButton}>
-              {t.event.delete}
-            </button>
-          </form>
+        {canEdit && (
+          <div className={styles.ownerActions}>
+            <Link href={`/events/${event.id}/edit`} className="btn btn-secondary">
+              {t.event.edit}
+            </Link>
+            <form action={deleteEvent}>
+              <input type="hidden" name="id" value={event.id} />
+              <button type="submit" className="btn btn-secondary">
+                {t.event.delete}
+              </button>
+            </form>
+          </div>
         )}
       </div>
     </main>

@@ -18,3 +18,16 @@
 .hint {
   color: var(--ink-muted);
 }
+
+.textarea {
+  min-height: 120px;
+  padding: var(--space-3) var(--space-4);
+  line-height: 22px;
+  resize: vertical;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--space-3);
+}
