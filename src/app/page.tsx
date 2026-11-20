@@ -1,3 +1,4 @@
+import LegalLinks from "@/components/LegalLinks";
 import Link from "next/link";
 import styles from "./page.module.css";
 import TopBar from "@/components/TopBar";
@@ -33,6 +34,7 @@ export default async function Home() {
             {t.home.login}
           </Link>
         </div>
+        <LegalLinks />
       </main>
     );
   }

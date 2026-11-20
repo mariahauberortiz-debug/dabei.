@@ -1,3 +1,5 @@
+import LegalLinks from "@/components/LegalLinks";
+import Link from "next/link";
 import styles from "./profile.module.css";
 import TopBar from "@/components/TopBar";
 import BottomNav from "@/components/BottomNav";
@@ -95,7 +97,14 @@ export default async function ProfilePage({ searchParams }: PageProps<"/profile"
         </button>
       </form>
 
-      {profile?.is_admin && <p className={`caption ${styles.muted}`}>{t.profile.admin}</p>}
+      {profile?.is_admin && (
+        <div className={styles.section}>
+          <p className={`caption ${styles.muted}`}>{t.profile.admin}</p>
+          <Link href="/admin" className="btn btn-secondary btn-block">
+            {t.admin.link}
+          </Link>
+        </div>
+      )}
 
       <form action={logout}>
         <button type="submit" className="btn btn-secondary btn-block">
@@ -103,6 +112,7 @@ export default async function ProfilePage({ searchParams }: PageProps<"/profile"
         </button>
       </form>
 
+      <LegalLinks />
       <BottomNav t={t} active="profile" />
     </main>
   );

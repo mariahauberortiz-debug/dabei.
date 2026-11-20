@@ -1,3 +1,4 @@
+import LegalLinks from "@/components/LegalLinks";
 import Link from "next/link";
 import styles from "../auth.module.css";
 import TopBar from "@/components/TopBar";
@@ -77,6 +78,7 @@ export default async function SignupPage({ searchParams }: PageProps<"/signup">)
       >
         {t.auth.toLogin}
       </Link>
+      <LegalLinks />
     </main>
   );
 }
