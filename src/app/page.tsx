@@ -15,7 +15,7 @@ export default async function Home() {
   if (!user) {
     return (
       <main className={`column ${styles.page}`}>
-        <TopBar lang={lang} toggleLabel={t.langToggle.label} />
+        <TopBar lang={lang} toggleLabel={t.langToggle.label} loginLabel={t.home.login} />
         <section className={styles.hero}>
           <h1 className="display-xl">{t.home.title}</h1>
           <p className={`body ${styles.muted}`}>{t.home.intro}</p>

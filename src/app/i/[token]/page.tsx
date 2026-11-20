@@ -48,7 +48,7 @@ export default async function InvitePage({ params, searchParams }: PageProps<"/i
 
   return (
     <main className={`column ${styles.page}`}>
-      <TopBar lang={lang} toggleLabel={t.langToggle.label} />
+      <TopBar lang={lang} toggleLabel={t.langToggle.label} loginLabel={user ? undefined : t.home.login} />
 
       <p className={`label ${styles.muted}`}>{t.invite.from(invite.initiator)}</p>
 

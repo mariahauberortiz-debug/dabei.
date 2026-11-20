@@ -18,7 +18,7 @@ const de = {
     placeBody:
       "Hier wird aus „wollte ich mal“ ein „ich bin dabei“ – zusammen mit deinen Freunden.",
     signup: "Konto erstellen",
-    login: "Ich habe schon ein Konto",
+    login: "Anmelden",
     hello: "Hallo",
     tagline: "Sofa kann warten.",
     logout: "Abmelden",
@@ -177,7 +177,7 @@ const en: Dictionary = {
     placeBody:
       "This is where “I've been meaning to” becomes “I'm in” – together with your friends.",
     signup: "Create account",
-    login: "I already have an account",
+    login: "Sign in",
     hello: "Hi",
     tagline: "The sofa can wait.",
     logout: "Sign out",
