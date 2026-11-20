@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
-};
+// Every screen depends on who is signed in and their language, so pages are
+// rendered per request (no static prerendering / cache components).
+const nextConfig: NextConfig = {};
 
 export default nextConfig;

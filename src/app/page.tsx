@@ -1,22 +1,22 @@
 import styles from "./page.module.css";
+import TopBar from "@/components/TopBar";
+import { getDictionary } from "@/i18n/lang";
 
-export default function Home() {
+export default async function Home() {
+  const { lang, t } = await getDictionary();
+
   return (
     <main className={`column ${styles.page}`}>
-      <p className="title">dabei.</p>
+      <TopBar lang={lang} toggleLabel={t.langToggle.label} />
 
       <section className={styles.hero}>
-        <h1 className="display-xl">Gespeichert ist nicht erlebt.</h1>
-        <p className={`body ${styles.muted}`}>
-          Aus dem, was du dir vorgenommen hast, wird ein Plan – mit jemandem, der dabei ist.
-        </p>
+        <h1 className="display-xl">{t.home.title}</h1>
+        <p className={`body ${styles.muted}`}>{t.home.intro}</p>
       </section>
 
       <div className={styles.card}>
-        <p className="label">Bald geht&apos;s los</p>
-        <p className="body">
-          Die erste Version ist im Aufbau. Du bekommst einen Link, sobald du dich anmelden kannst.
-        </p>
+        <p className="label">{t.home.soonLabel}</p>
+        <p className="body">{t.home.soonBody}</p>
       </div>
     </main>
   );

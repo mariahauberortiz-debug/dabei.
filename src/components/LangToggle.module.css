@@ -1,0 +1,27 @@
+.toggle {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+}
+
+.option {
+  min-width: 44px;
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.active {
+  background: var(--ink);
+  color: var(--surface);
+}
