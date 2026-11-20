@@ -75,3 +75,12 @@ export async function logout() {
   revalidatePath("/", "layout");
   redirect("/");
 }
+
+// Landing: someone pastes the invitation link they got → take them to the invitation page.
+export async function openInvite(formData: FormData) {
+  const raw = str(formData.get("invite_link"));
+  const token = raw.match(/\/i\/([a-f0-9]{8,64})/)?.[1] ?? raw.match(/^[a-f0-9]{8,64}$/)?.[0];
+  if (!token || !(await getInvite(token))) redirect("/?invite=invalid");
+  const from = raw.match(/[?&]from=([0-9a-f-]{36})/)?.[1];
+  redirect(`/i/${token}${from ? `?from=${from}` : ""}`);
+}

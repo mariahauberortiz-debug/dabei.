@@ -7,16 +7,18 @@ import { getDictionary } from "@/i18n/lang";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import { EVENT_COLUMNS, groupForHome, type EventRow } from "@/lib/events";
 import BottomNav from "@/components/BottomNav";
+import { openInvite } from "./auth/actions";
 import { formatDateTime, hoursAgoISO, relativeDay } from "@/lib/dates";
 
-export default async function Home() {
+export default async function Home({ searchParams }: PageProps<"/">) {
+  const inviteError = (await searchParams).invite === "invalid";
   const { lang, t } = await getDictionary();
   const user = await getCurrentUser();
 
   if (!user) {
     return (
       <main className={`column ${styles.page}`}>
-        <TopBar lang={lang} toggleLabel={t.langToggle.label} loginLabel={t.home.login} />
+        <TopBar lang={lang} toggleLabel={t.langToggle.label} />
         <section className={styles.hero}>
           <h1 className="display-xl">{t.home.title}</h1>
           <p className={`body ${styles.muted}`}>{t.home.intro}</p>
@@ -28,9 +30,34 @@ export default async function Home() {
         <section className={styles.inviteOnly}>
           <span className={styles.inviteBadge}>{t.inviteOnly.badge}</span>
           <p className="body">{t.inviteOnly.landing}</p>
+          <form action={openInvite} className={styles.pasteForm}>
+            <label htmlFor="invite_link" className="label">
+              {t.inviteOnly.pasteLabel}
+            </label>
+            <input
+              id="invite_link"
+              name="invite_link"
+              type="text"
+              inputMode="url"
+              autoComplete="off"
+              placeholder={t.inviteOnly.pastePlaceholder}
+              className={styles.pasteInput}
+              required
+            />
+            {inviteError && (
+              <p role="alert" className="caption" style={{ color: "var(--burgundy)" }}>
+                {t.inviteOnly.pasteError}
+              </p>
+            )}
+            <button type="submit" className="btn btn-primary btn-block">
+              {t.inviteOnly.pasteButton}
+            </button>
+          </form>
+          <p className={`caption ${styles.muted}`}>{t.inviteOnly.noInvite}</p>
         </section>
         <div className={styles.actions}>
-          <Link href="/login" className="btn btn-primary btn-block">
+          <p className={`body ${styles.muted}`}>{t.inviteOnly.haveAccount}</p>
+          <Link href="/login" className="btn btn-secondary btn-block">
             {t.home.login}
           </Link>
         </div>
