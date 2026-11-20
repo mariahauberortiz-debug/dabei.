@@ -114,3 +114,16 @@
   font-size: 44px;
   line-height: 40px;
 }
+
+/* "Wie war's?" prompt: olive block, the strongest moment after a plan */
+.reviewCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--olive);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--radius-card) var(--radius-card) var(--radius-card) var(--radius-notch);
+}

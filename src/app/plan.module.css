@@ -190,3 +190,66 @@
 .row > * {
   flex: 1 1 140px;
 }
+
+/* "Wie war's?" – one row per person with two pill choices */
+.choice {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.choiceName {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0;
+  font-weight: 500;
+  float: left; /* keeps the legend inside the box */
+  width: 100%;
+}
+
+.choiceOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  clear: both;
+}
+
+.option {
+  position: relative;
+  flex: 1 1 120px;
+}
+
+.option input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+}
+
+.option input:checked + span {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+.option input:focus-visible + span {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

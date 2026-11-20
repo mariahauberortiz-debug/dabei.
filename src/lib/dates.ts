@@ -73,3 +73,7 @@ export function daysUntil(iso: string) {
 export function hoursAgoISO(n: number) {
   return new Date(Date.now() - n * 3_600_000).toISOString();
 }
+
+export function isPast(iso: string) {
+  return new Date(iso).getTime() <= Date.now();
+}

@@ -37,7 +37,7 @@ export default async function Home() {
   // Screen 4 · Homepage
   const supabase = await createClient();
   const since = hoursAgoISO(12); // keep today's plans visible
-  const [{ data: profile }, { data: events }, { data: planData }] = await Promise.all([
+  const [{ data: profile }, { data: events }, { data: planData }, { data: reviewData }] = await Promise.all([
     supabase.from("profiles").select("display_name").eq("id", user.id).single(),
     supabase.from("events").select(EVENT_COLUMNS).or(`source.eq.curated,created_by.eq.${user.id}`),
     supabase
@@ -48,7 +48,19 @@ export default async function Home() {
       .eq("status", "open")
       .gte("starts_at", since)
       .order("starts_at"),
+    // Screen 11 entry: past plans (last 3 days) where I haven't said yet whether I was there
+    supabase
+      .from("plans")
+      .select("id,event:events(title),plan_participants!inner(user_id,status,attended)")
+      .eq("plan_participants.user_id", user.id)
+      .eq("plan_participants.status", "going")
+      .is("plan_participants.attended", null)
+      .lte("starts_at", hoursAgoISO(2))
+      .gte("starts_at", hoursAgoISO(72))
+      .order("starts_at", { ascending: false })
+      .limit(1),
   ]);
+  const toReview = ((reviewData ?? []) as unknown as { id: string; event: { title: string } | null }[])[0];
   const plans = (planData ?? []) as unknown as {
     id: string;
     starts_at: string;
@@ -74,6 +86,13 @@ export default async function Home() {
         </h1>
         <p className={`body ${styles.muted}`}>{t.home.tagline}</p>
       </header>
+
+      {toReview?.event && (
+        <Link href={`/plans/${toReview.id}/review`} className={styles.reviewCard}>
+          <span className="title">{t.review.prompt(toReview.event.title)}</span>
+          <span className="btn btn-primary">{t.review.promptCta}</span>
+        </Link>
+      )}
 
       {plans.length > 0 && (
         <section className={styles.section} aria-labelledby="h-plans">

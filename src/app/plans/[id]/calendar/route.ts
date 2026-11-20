@@ -36,7 +36,9 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/plans/[id]/c
     .is("added_to_calendar_at", null);
 
   const { t } = await getDictionary();
-  const planUrl = `${await siteUrl()}/plans/${id}`;
+  const base = await siteUrl();
+  const planUrl = `${base}/plans/${id}`;
+  const reviewUrl = `${base}/plans/${id}/review`;
   const start = new Date(plan.starts_at);
   const end = new Date(start.getTime() + DEFAULT_DURATION_MIN * 60_000);
   const title = `${plan.event.title} · dabei.`;
@@ -58,8 +60,8 @@ export async function GET(request: NextRequest, ctx: RouteContext<"/plans/[id]/c
       start: reviewStart,
       end: new Date(reviewStart.getTime() + 15 * 60_000),
       location: null,
-      description: t.calendar.reviewDescription(plan.event.title, planUrl),
-      url: planUrl,
+      description: t.calendar.reviewDescription(plan.event.title, reviewUrl),
+      url: reviewUrl,
       alarmAt: reviewStart,
     });
   }

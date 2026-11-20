@@ -6,7 +6,7 @@ import ShareButtons from "@/components/ShareButtons";
 import { getDictionary } from "@/i18n/lang";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { formatDateTime } from "@/lib/dates";
+import { formatDateTime, isPast } from "@/lib/dates";
 import { inviteLink, siteUrl } from "@/lib/plans";
 import { removeParticipant } from "../actions";
 
@@ -146,7 +146,13 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
         {isInitiator && going.length <= 1 && <p className={`body ${styles.muted}`}>{t.plan.nobodyYet}</p>}
       </section>
 
-      {iAmGoing && (
+      {iAmGoing && isPast(plan.starts_at) && (
+        <Link href={`/plans/${plan.id}/review`} className="btn btn-primary btn-block">
+          {t.review.title}
+        </Link>
+      )}
+
+      {iAmGoing && !isPast(plan.starts_at) && (
         <section className={styles.section} aria-labelledby="cal">
           <h2 id="cal" className="title">
             {t.calendar.title}
