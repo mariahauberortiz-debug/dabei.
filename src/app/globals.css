@@ -1,0 +1,107 @@
+/*
+ * dabei. design tokens
+ * Source: Claude Design canvas "dabei. Prototyp 1 · Inés" → project/ds/dabei/tokens.json
+ * (see design/README.md). Change values here and they apply everywhere.
+ */
+:root {
+  /* Color */
+  --surface: #f8eedb; /* page background of calm screens */
+  --surface-raised: #fffdf8; /* cards, inputs, sheets */
+  --cream: #fae3b1; /* calm accent areas, selected chips — never a whole page */
+  --line: #d9c7a4; /* hairlines, decorative card borders */
+  --ink: #452928; /* text and control borders */
+  --ink-muted: #6e4f48; /* secondary text, metadata */
+  --olive: #998731; /* brand pair 1: big colour blocks in strong moments */
+  --periwinkle: #7f86f2; /* brand pair 2: decorative only */
+  --night: #1e1a4a; /* text on periwinkle */
+  --burgundy: #7d2027; /* primary action, max one per screen */
+  --on-burgundy: #fae3b1; /* text on burgundy */
+  --focus-ring: var(--burgundy);
+
+  /* Type families (self-hosted via @fontsource, imported in layout.tsx) */
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-sans: "Inter Variable", Inter, system-ui, sans-serif;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-notch: 8px;
+  --radius-thumb: 18px;
+  --radius-field: 22px;
+  --radius-card: 28px;
+  --radius-photo: 48px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --column-max: 560px; /* centred column on tablet/desktop */
+}
+
+/* Type styles */
+.display-xl { font-family: var(--font-display); font-weight: 400; font-size: 56px; line-height: 52px; }
+.display-l { font-family: var(--font-display); font-weight: 400; font-size: 36px; line-height: 38px; }
+.title { font-family: var(--font-display); font-weight: 400; font-size: 26px; line-height: 30px; }
+.heading { font-family: var(--font-sans); font-weight: 500; font-size: 17px; line-height: 24px; }
+.body { font-family: var(--font-sans); font-weight: 400; font-size: 15px; line-height: 22px; }
+.label { font-family: var(--font-sans); font-weight: 500; font-size: 13px; line-height: 18px; }
+.caption { font-family: var(--font-sans); font-weight: 400; font-size: 12px; line-height: 16px; }
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+a { color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-primary { border: 0; background: var(--burgundy); color: var(--on-burgundy); }
+.btn-secondary { border: 1.5px solid var(--ink); background: transparent; color: var(--ink); font-weight: 500; }
+.btn-block { width: 100%; }
+
+/* Page column: phone full width, centred column from tablet up */
+.column {
+  width: 100%;
+  max-width: var(--column-max);
+  margin: 0 auto;
+  padding: var(--space-6);
+}
