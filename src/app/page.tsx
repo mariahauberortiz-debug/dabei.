@@ -19,6 +19,10 @@ export default async function Home() {
           <h1 className="display-xl">{t.home.title}</h1>
           <p className={`body ${styles.muted}`}>{t.home.intro}</p>
         </section>
+        <section className={styles.card}>
+          <h2 className="title">{t.home.placeTitle}</h2>
+          <p className="body">{t.home.placeBody}</p>
+        </section>
         <div className={styles.actions}>
           <Link href="/signup" className="btn btn-primary btn-block">
             {t.home.signup}
