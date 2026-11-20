@@ -1,0 +1,85 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-8);
+  padding-bottom: 120px; /* room for the bottom navigation */
+}
+
+.muted {
+  color: var(--ink-muted);
+}
+
+.notice {
+  padding: var(--space-3) var(--space-4);
+  background: var(--cream);
+  border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Chip = checkbox styled as a pill (selected → cream), as in the design */
+.chip {
+  position: relative;
+}
+
+.chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.chip span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.chip input:checked + span {
+  background: var(--cream);
+}
+
+.chip input:checked + span::before {
+  content: "✓";
+  margin-right: 6px;
+}
+
+.chip input:focus-visible + span {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

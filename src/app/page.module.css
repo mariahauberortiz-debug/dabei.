@@ -8,7 +8,7 @@
 
 .home {
   gap: 28px;
-  padding-bottom: 120px; /* room for the floating button */
+  padding-bottom: 180px; /* room for the floating button and the bottom navigation */
 }
 
 .hero {
@@ -77,8 +77,9 @@
 /* Organic "+" button from the design (sticks to the bottom right of the column) */
 .fab {
   position: fixed;
-  bottom: var(--space-6);
+  bottom: calc(84px + env(safe-area-inset-bottom)); /* above the bottom navigation */
   right: max(var(--space-6), calc((100vw - var(--column-max)) / 2 + var(--space-6)));
+  z-index: 11;
   width: 60px;
   height: 56px;
   border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
@@ -149,4 +150,16 @@
   background: var(--burgundy);
   color: var(--on-burgundy);
   border-radius: var(--radius-pill);
+}
+
+.pastCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
 }

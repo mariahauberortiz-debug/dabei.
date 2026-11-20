@@ -5,7 +5,7 @@ import EventCard from "@/components/EventCard";
 import { getDictionary } from "@/i18n/lang";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import { EVENT_COLUMNS, groupForHome, type EventRow } from "@/lib/events";
-import { logout } from "./auth/actions";
+import BottomNav from "@/components/BottomNav";
 import { formatDateTime, hoursAgoISO } from "@/lib/dates";
 
 export default async function Home() {
@@ -141,12 +141,6 @@ export default async function Home() {
           </section>
         ))}
 
-      <form action={logout} className={styles.logout}>
-        <button type="submit" className={`body ${styles.textButton}`}>
-          {t.home.logout}
-        </button>
-      </form>
-
       {hasOwn && (
         <Link href="/events/new" className={styles.fab} aria-label={t.home.addEvent}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -154,6 +148,7 @@ export default async function Home() {
           </svg>
         </Link>
       )}
+      <BottomNav t={t} active="start" />
     </main>
   );
 }
