@@ -107,3 +107,12 @@ export function formatRange(startIso: string, endIso: string | null, lang: Lang)
   const shortGap = new Date(endIso).getTime() - new Date(startIso).getTime() <= 14 * 3_600_000;
   return sameDay || shortGap ? `${start}–${formatTime(endIso, lang)}` : start;
 }
+
+/** "today" / "tomorrow" in Berlin time, else null. */
+export function relativeDay(iso: string): "today" | "tomorrow" | null {
+  const day = toBerlinParts(iso).date;
+  const now = Date.now();
+  if (day === toBerlinParts(new Date(now).toISOString()).date) return "today";
+  if (day === toBerlinParts(new Date(now + 86_400_000).toISOString()).date) return "tomorrow";
+  return null;
+}

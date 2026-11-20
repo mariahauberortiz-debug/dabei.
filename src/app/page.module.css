@@ -163,3 +163,16 @@
   text-decoration: none;
   border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
 }
+
+.dayBadge {
+  align-self: flex-start;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  background: var(--cream);
+  color: var(--ink);
+  border-radius: var(--radius-pill);
+}

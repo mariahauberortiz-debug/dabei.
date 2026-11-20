@@ -6,7 +6,7 @@ import { getDictionary } from "@/i18n/lang";
 import { createClient, getCurrentUser } from "@/lib/supabase/server";
 import { EVENT_COLUMNS, groupForHome, type EventRow } from "@/lib/events";
 import BottomNav from "@/components/BottomNav";
-import { formatDateTime, hoursAgoISO } from "@/lib/dates";
+import { formatDateTime, hoursAgoISO, relativeDay } from "@/lib/dates";
 
 export default async function Home() {
   const { lang, t } = await getDictionary();
@@ -105,6 +105,11 @@ export default async function Home() {
           {plans.map((p) => (
             <Link key={p.id} href={`/plans/${p.id}`} className={styles.planCard}>
               <span className={styles.planText}>
+                {relativeDay(p.starts_at) && (
+                  <span className={styles.dayBadge}>
+                    {relativeDay(p.starts_at) === "today" ? t.reminder.today : t.reminder.tomorrow}
+                  </span>
+                )}
                 <span className="title">{p.event?.title}</span>
                 <span className="body">
                   {[formatDateTime(p.starts_at, lang), p.event?.location].filter(Boolean).join(" · ")}

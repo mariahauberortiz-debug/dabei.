@@ -7,7 +7,7 @@ import ShareButtons from "@/components/ShareButtons";
 import { getDictionary } from "@/i18n/lang";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { formatDateTime, isPast } from "@/lib/dates";
+import { formatDateTime, isPast, relativeDay } from "@/lib/dates";
 import { inviteLink, siteUrl } from "@/lib/plans";
 import { removeParticipant } from "../actions";
 
@@ -25,6 +25,7 @@ type ParticipantRow = {
   user_id: string;
   status: "going" | "declined";
   joined_at: string;
+  reminded_at: string | null;
   profile: { display_name: string; avatar_url: string | null; bio: string | null } | null;
 };
 
@@ -44,7 +45,7 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
       .maybeSingle(),
     supabase
       .from("plan_participants")
-      .select("user_id,status,joined_at,profile:profiles!plan_participants_user_id_fkey(display_name,avatar_url,bio)")
+      .select("user_id,status,joined_at,reminded_at,profile:profiles!plan_participants_user_id_fkey(display_name,avatar_url,bio)")
       .eq("plan_id", id)
       .order("joined_at"),
   ]);
@@ -145,6 +146,24 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
         </ul>
         {isInitiator && going.length <= 1 && <p className={`body ${styles.muted}`}>{t.plan.nobodyYet}</p>}
       </section>
+
+      {isInitiator && !isPast(plan.starts_at) && relativeDay(plan.starts_at) && going.length > 1 && (
+        <section className={styles.reminder} aria-labelledby="remind">
+          <h2 id="remind" className="title">
+            {relativeDay(plan.starts_at) === "today" ? t.reminder.titleToday : t.reminder.title}
+          </h2>
+          <p className="body">{t.reminder.intro}</p>
+          <div className={styles.reminderList}>
+            {going
+              .filter((p) => p.user_id !== user.id)
+              .map((p) => (
+                <a key={p.user_id} href={`/plans/${plan.id}/remind?user=${p.user_id}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-block">
+                  {p.reminded_at ? `${p.profile?.display_name} · ${t.reminder.reminded}` : t.reminder.remind(p.profile?.display_name ?? "")}
+                </a>
+              ))}
+          </div>
+        </section>
+      )}
 
       {iAmGoing && isPast(plan.starts_at) && (
         <Link href={`/plans/${plan.id}/review`} className="btn btn-primary btn-block">

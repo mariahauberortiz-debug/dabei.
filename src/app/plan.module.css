@@ -262,3 +262,19 @@
   padding-top: var(--space-2);
   padding-bottom: var(--space-2);
 }
+
+/* Dev 7 · "Morgen ist es so weit" – cream block with one reminder button per person */
+.reminder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background: var(--cream);
+  border-radius: var(--radius-card) var(--radius-card) var(--radius-card) var(--radius-notch);
+}
+
+.reminderList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
