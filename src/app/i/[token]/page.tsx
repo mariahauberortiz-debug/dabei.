@@ -53,7 +53,7 @@ export default async function InvitePage({ params, searchParams }: PageProps<"/i
 
       <p className={`label ${styles.muted}`}>{t.invite.from(invite.initiator)}</p>
 
-      <Photo src={invite.event.image_url} alt={invite.event.title} className={styles.photo} />
+      <Photo src={invite.event.image_url} alt={invite.event.title} className={styles.photo} category={invite.event.category ?? null} iconSize={96} />
 
       <div className={styles.head}>
         <h1 className="display-l">{invite.event.title}</h1>

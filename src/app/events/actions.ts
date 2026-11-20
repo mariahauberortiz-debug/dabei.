@@ -58,6 +58,9 @@ function readImage(formData: FormData) {
 function readEvent(formData: FormData) {
   return {
     image_url: readImage(formData),
+    category: (["kunst", "musik", "essen", "selber", "bewegung", "draussen", "treffen"] as const).find(
+      (c) => c === formData.get("category"),
+    ) ?? null,
     source: formData.get("curated") === "1" ? ("curated" as const) : ("user" as const),
     title: text(formData.get("title")),
     url: cleanUrl(text(formData.get("url"))),

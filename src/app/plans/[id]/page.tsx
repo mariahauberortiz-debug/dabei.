@@ -19,7 +19,7 @@ type PlanRow = {
   status: string;
   invite_token: string;
   initiator_id: string;
-  event: { id: string; title: string; location: string | null; image_url: string | null } | null;
+  event: { id: string; title: string; location: string | null; image_url: string | null; category: string | null } | null;
 };
 type ParticipantRow = {
   user_id: string;
@@ -40,7 +40,7 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
   const [{ data: planData }, { data: partData }] = await Promise.all([
     supabase
       .from("plans")
-      .select("id,starts_at,capacity,note,status,invite_token,initiator_id,event:events(id,title,location,image_url)")
+      .select("id,starts_at,capacity,note,status,invite_token,initiator_id,event:events(id,title,location,image_url,category)")
       .eq("id", id)
       .maybeSingle(),
     supabase
@@ -96,7 +96,7 @@ export default async function PlanPage({ params, searchParams }: PageProps<"/pla
       )}
 
       <Link href={`/events/${plan.event.id}`} className={styles.summary}>
-        <Photo src={plan.event.image_url} alt={plan.event.title} className={styles.thumb} />
+        <Photo src={plan.event.image_url} alt={plan.event.title} className={styles.thumb} category={plan.event.category} iconSize={28} />
         <span className={styles.summaryText}>
           <span className="title">{plan.event.title}</span>
           <span className={`body ${styles.muted}`}>{[date, plan.event.location].filter(Boolean).join(" · ")}</span>

@@ -7,7 +7,14 @@ export type Invite = {
   capacity: number | null;
   note: string | null;
   status: "open" | "cancelled";
-  event: { title: string; description: string | null; location: string | null; url: string | null; image_url: string | null };
+  event: {
+    title: string;
+    description: string | null;
+    location: string | null;
+    url: string | null;
+    image_url: string | null;
+    category?: string | null;
+  };
   initiator: string;
   going: string[];
   going_people?: { name: string; avatar_url: string | null }[];

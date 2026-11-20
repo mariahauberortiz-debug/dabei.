@@ -13,21 +13,21 @@ export default async function ImpressumPage() {
         <p>
           <strong>Angaben gemäß § 5 DDG</strong>
           <br />
-          [VOR- UND NACHNAME]
+          María Hauber Ortiz
           <br />
           [STRASSE UND HAUSNUMMER]
           <br />
-          [PLZ] Berlin
+          10245 Berlin
         </p>
         <p>
           <strong>Kontakt</strong>
           <br />
-          E-Mail: [E-MAIL-ADRESSE]
+          E-Mail: maria.hauberortiz@gmail.com
         </p>
         <p>
           <strong>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong>
           <br />
-          [VOR- UND NACHNAME], Anschrift wie oben
+          María Hauber Ortiz, Anschrift wie oben
         </p>
         <p>
           dabei. ist ein privates, nicht-kommerzielles Pilotprojekt im Rahmen einer Weiterbildung. Der Zugang ist nur mit

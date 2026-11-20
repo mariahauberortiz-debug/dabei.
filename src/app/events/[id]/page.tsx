@@ -84,7 +84,7 @@ export default async function EventDetailPage({ params }: PageProps<"/events/[id
         {t.event.back}
       </Link>
 
-      <Photo src={event.image_url} alt={event.title} className={styles.photo} />
+      <Photo src={event.image_url} alt={event.title} className={styles.photo} category={event.category} iconSize={96} />
 
       <div className={styles.head}>
         <span className={curated ? `${styles.badge} ${styles.badgeCurated}` : styles.badge}>

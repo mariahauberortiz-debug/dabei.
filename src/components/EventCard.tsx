@@ -27,7 +27,7 @@ export default function EventCard({
 
   return (
     <Link href={`/events/${event.id}`} className={styles.card}>
-      <Photo src={event.image_url} alt={event.title} className={styles.thumb} />
+      <Photo src={event.image_url} alt={event.title} className={styles.thumb} category={event.category} iconSize={36} />
       <span className={styles.body}>
         <span className={styles.badges}>
           <span className={curated ? `${styles.badge} ${styles.badgeCurated}` : styles.badge}>

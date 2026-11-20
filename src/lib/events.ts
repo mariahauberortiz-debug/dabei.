@@ -8,10 +8,11 @@ export type EventRow = {
   starts_at: string | null;
   ends_at: string | null;
   source: "user" | "curated";
+  category: string | null;
   created_by: string | null;
 };
 
-export const EVENT_COLUMNS = "id,title,description,location,url,image_url,starts_at,ends_at,source,created_by";
+export const EVENT_COLUMNS = "id,title,description,location,url,image_url,starts_at,ends_at,source,created_by,category";
 
 /**
  * Homepage grouping (screen 4):

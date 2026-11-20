@@ -57,7 +57,7 @@ export default async function NewPlanPage({ params, searchParams }: PageProps<"/
       </Link>
 
       <div className={styles.summary}>
-        <Photo src={event.image_url} alt={event.title} className={styles.thumb} />
+        <Photo src={event.image_url} alt={event.title} className={styles.thumb} category={event.category} iconSize={28} />
         <span className={styles.summaryText}>
           <span className="title">{event.title}</span>
           {event.location && <span className={`caption ${styles.muted}`}>{event.location}</span>}

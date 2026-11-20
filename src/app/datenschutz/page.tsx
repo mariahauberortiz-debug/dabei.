@@ -12,7 +12,7 @@ export default async function DatenschutzPage() {
       {lang === "en" && <p className="caption">This page is only available in German, the legally binding version.</p>}
       <section className="body" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         <h2 className="heading" style={h}>1. Verantwortliche</h2>
-        <p>[VOR- UND NACHNAME], [ANSCHRIFT], [E-MAIL-ADRESSE]</p>
+        <p>María Hauber Ortiz, [STRASSE UND HAUSNUMMER], 10245 Berlin, maria.hauberortiz@gmail.com</p>
 
         <h2 className="heading" style={h}>2. Welche Daten wir verarbeiten</h2>
         <p>
@@ -50,11 +50,11 @@ export default async function DatenschutzPage() {
         <h2 className="heading" style={h}>8. Deine Rechte</h2>
         <p>
           Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Schreib
-          dafür an [E-MAIL-ADRESSE]. Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, in Berlin bei
+          dafür an maria.hauberortiz@gmail.com. Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, in Berlin bei
           der Berliner Beauftragten für Datenschutz und Informationsfreiheit.
         </p>
 
-        <p className="caption" style={{ color: "var(--ink-muted)" }}>Stand: [DATUM]</p>
+        <p className="caption" style={{ color: "var(--ink-muted)" }}>Stand: November 2026</p>
       </section>
     </main>
   );

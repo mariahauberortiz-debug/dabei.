@@ -1,5 +1,7 @@
 import Field from "./Field";
 import ImagePicker from "./ImagePicker";
+import CategoryIcon, { CATEGORIES } from "./CategoryIcon";
+import chip from "./Chips.module.css";
 import fieldStyles from "./Field.module.css";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { EventRow } from "@/lib/events";
@@ -40,6 +42,25 @@ export default function EventForm({
       </div>
       <Field id="ends_on" label={t.newEvent.endsAt} hint={t.newEvent.endsAtHint} type="date" min="2024-01-01" max="2100-12-31" defaultValue={!endIsTime ? end?.date : undefined} />
       <Field id="location" label={t.newEvent.location} hint={t.newEvent.locationHint} defaultValue={event?.location ?? undefined} />
+      <fieldset style={{ margin: 0, padding: 0, border: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+        <legend className="label" style={{ padding: 0, marginBottom: 8 }}>
+          {t.newEvent.category}
+        </legend>
+        <div className={chip.chips}>
+          {CATEGORIES.map((c) => (
+            <label key={c} className={chip.chip}>
+              <input type="radio" name="category" value={c} defaultChecked={event?.category === c} />
+              <span>
+                <CategoryIcon category={c} size={18} />
+                {t.newEvent.categories[c]}
+              </span>
+            </label>
+          ))}
+        </div>
+        <p className="caption" style={{ color: "var(--ink-muted)" }}>
+          {t.newEvent.categoryHint}
+        </p>
+      </fieldset>
       <Field id="description" label={t.newEvent.description} multiline defaultValue={event?.description ?? undefined} />
       <ImagePicker
         userId={userId}

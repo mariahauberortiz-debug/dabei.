@@ -22,7 +22,7 @@ export default async function ReviewPage({ params, searchParams }: PageProps<"/p
   const [{ data: planData }, { data: rowData }] = await Promise.all([
     supabase
       .from("plans")
-      .select("id,starts_at,initiator_id,review_note,event:events(title,location,image_url)")
+      .select("id,starts_at,initiator_id,review_note,event:events(title,location,image_url,category)")
       .eq("id", id)
       .maybeSingle(),
     supabase
@@ -37,7 +37,7 @@ export default async function ReviewPage({ params, searchParams }: PageProps<"/p
     starts_at: string;
     initiator_id: string;
     review_note: string | null;
-    event: { title: string; location: string | null; image_url: string | null } | null;
+    event: { title: string; location: string | null; image_url: string | null; category: string | null } | null;
   } | null;
   const rows = (rowData ?? []) as unknown as Row[];
 
@@ -57,7 +57,7 @@ export default async function ReviewPage({ params, searchParams }: PageProps<"/p
     <>
       <TopBar lang={lang} toggleLabel={t.langToggle.label} />
       <div className={styles.summary}>
-        <Photo src={plan.event.image_url} alt={plan.event.title} className={styles.thumb} />
+        <Photo src={plan.event.image_url} alt={plan.event.title} className={styles.thumb} category={plan.event.category} iconSize={28} />
         <span className={styles.summaryText}>
           <span className="title">{plan.event.title}</span>
           <span className={`body ${styles.muted}`}>
