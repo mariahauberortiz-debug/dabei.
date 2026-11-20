@@ -1,0 +1,45 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-top: var(--space-8);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.muted {
+  color: var(--ink-muted);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.notice {
+  padding: var(--space-4) var(--space-6);
+  background: var(--cream);
+  border-radius: var(--radius-card) var(--radius-card) var(--radius-card) var(--radius-notch);
+}
+
+.error {
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--burgundy);
+  color: var(--burgundy);
+  border-radius: var(--radius-field) var(--radius-field) var(--radius-field) var(--radius-notch);
+}
+
+.switch {
+  align-self: center;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+  text-underline-offset: 3px;
+}
