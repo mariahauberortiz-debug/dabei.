@@ -134,6 +134,8 @@ const de = {
     reviewDescription: (title: string, link: string) => `Wart ihr bei „${title}“? Sag kurz Bescheid: ${link}`,
   },
   inviteOnly: {
+    badge: "Nur mit Einladung",
+    landing: "dabei. ist ein geschlossener Kreis unter Freunden. Wenn dich jemand zu einem Plan einlädt, erstellst du über diesen Link dein Konto.",
     title: "dabei. ist gerade nur mit Einladung",
     body: "Um ein Konto zu erstellen, brauchst du einen Einladungslink von jemandem, der schon dabei ist.",
   },
@@ -293,6 +295,8 @@ const en: Dictionary = {
     reviewDescription: (title: string, link: string) => `Did you make it to “${title}”? Let us know: ${link}`,
   },
   inviteOnly: {
+    badge: "Invite only",
+    landing: "dabei. is a closed circle of friends. When someone invites you to a plan, you create your account through that link.",
     title: "dabei. is invite-only right now",
     body: "To create an account, you need an invitation link from someone who's already in.",
   },

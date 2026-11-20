@@ -24,11 +24,14 @@ export default async function Home() {
           <h2 className="title">{t.home.placeTitle}</h2>
           <p className="body">{t.home.placeBody}</p>
         </section>
+        <section className={styles.inviteOnly}>
+          <span className={styles.inviteBadge}>{t.inviteOnly.badge}</span>
+          <p className="body">{t.inviteOnly.landing}</p>
+        </section>
         <div className={styles.actions}>
           <Link href="/login" className="btn btn-primary btn-block">
             {t.home.login}
           </Link>
-          <p className={`caption ${styles.muted}`}>{t.inviteOnly.body}</p>
         </div>
       </main>
     );
